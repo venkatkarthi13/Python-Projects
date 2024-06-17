@@ -1,0 +1,96 @@
+import sys
+import random
+from enum import Enum
+
+
+def RPS(name="player"):
+    game_count=0
+    player_wins=0
+    python_wins=0
+ 
+    class RPS(Enum):
+        Rock=1
+        Paper=2
+        Scissor=3   
+        
+    def Play_rps():
+        nonlocal name
+        nonlocal player_wins
+        nonlocal python_wins
+        
+        player=input(f"Hi {name}... enter a number: \n 1. For Rock \n 2. For paper \n 3. For Scissor \n\n")
+        
+        if player not in ["1","2","3"]:
+            print(f"\n {name} You must enter 1, 2, or 3.\n")
+            return Play_rps()
+        
+        computer=random.choice("123")
+        computerChoose=int(computer)
+        playerChoose=int(player)
+        
+        # if player < 1 or player > 3:
+        #     sys.exit("Please enter a value between 1 to 3")
+            
+        print(f"{name}, You choose {str(RPS(playerChoose)).replace('RPS.','')}. ")
+        print(f"Computer choose {str(RPS(computerChoose)).replace('RPS.','')}.\n")
+        
+        def Winner(playerChoose,computerChoose):
+            nonlocal name
+            nonlocal player_wins
+            nonlocal python_wins
+            if playerChoose==2 and computerChoose==3:
+                player_wins += 1
+                return f"{name} 🎉You Win🎉" 
+            elif playerChoose==3 and computerChoose==1:
+                player_wins += 1
+                return f"{name} 🎉You win🎉"
+            elif playerChoose==1 and computerChoose==2:
+                player_wins += 1
+                return f"{name} 🎉You win🎉"
+            elif playerChoose==computerChoose:
+                return "🙂Tie Game"
+            else:
+                python_wins += 1
+                return "🛑Bot wins🛑"
+        
+        result=Winner(playerChoose,computerChoose) 
+        print(result)
+                
+        nonlocal game_count
+        game_count += 1    
+        
+        print (f"\nGame count: {(game_count)}")
+        print(f"{name} wins: {(player_wins)}")
+        print(f"Python wins: {(python_wins)}\n")
+        print(f"play again, {name}?")
+        
+        while True:
+            playagain=input(f"{name} press w for yes or Q for Quit\n")
+            
+            if playagain.lower() not in ["w","q"]:
+                print(f"{name} it seems like You have entered a wrong key {playagain}. Please select the appropriate key to playAgain or Exit")
+                continue
+            else:
+                break
+            
+        if playagain.lower()=="w":
+            return Play_rps() 
+        elif playagain.lower()=="q":
+            sys.exit(f"Bye {name}!")    
+    Play_rps()
+
+if __name__  == "__main__":
+    
+    import argparse
+    
+    parser=argparse.ArgumentParser(description="Greeting of the player.")
+    
+    parser.add_argument(
+        "-n","--name",metavar="name",required=True,help="name of the person play's the game."
+    )
+
+    args=parser.parse_args()
+    # rock_paper_scissor=RPS(args.name)
+    RPS(args.name)
+        
+
