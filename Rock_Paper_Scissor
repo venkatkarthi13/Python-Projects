@@ -2,7 +2,6 @@ import sys
 import random
 from enum import Enum
 
-
 def RPS(name="player"):
     game_count=0
     player_wins=0
@@ -27,9 +26,6 @@ def RPS(name="player"):
         computer=random.choice("123")
         computerChoose=int(computer)
         playerChoose=int(player)
-        
-        # if player < 1 or player > 3:
-        #     sys.exit("Please enter a value between 1 to 3")
             
         print(f"{name}, You choose {str(RPS(playerChoose)).replace('RPS.','')}. ")
         print(f"Computer choose {str(RPS(computerChoose)).replace('RPS.','')}.\n")
